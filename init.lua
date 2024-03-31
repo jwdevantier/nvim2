@@ -544,11 +544,12 @@ require('lazy').setup({
       --
       -- If you want something to install these plugins automatically, look at mason, used in the
       -- standard neovim kickstart repo. If not, use something like Nix to provide the relevant environment.
-
-      -- :help lspconfig-all  #ocamllsp
+      --
+      -- ':help lspconfig-all' for details
       require'lspconfig'.ocamllsp.setup{}
-      -- :help lspconfig-all #clangd
       require'lspconfig'.clangd.setup{}
+      require'lspconfig'.nil_ls.setup{}
+      require'lspconfig'.gopls.setup{}
     end,
   },
 
