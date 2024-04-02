@@ -226,6 +226,26 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "ldelossa/nvim-dap-projects"},
+    config = function()
+      local dap = require('dap')
+
+      -- setup nvim-dap-ui also
+      local dapui = require("dapui")
+      dapui.setup()
+
+
+      vim.keymap.set('n', '<leader>du', dapui.toggle, { desc = '[D]ebug [U]i (toggle)' })
+      vim.keymap.set('n', '<leader>dc', '<CMD>DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
+      vim.keymap.set('n', '<leader>db', '<CMD>DapToggleBreakpoint<CR>', { desc = '[D]ebug [C]ontinue' })
+      vim.keymap.set('n', '<leader>dq', '<CMD>DapTerminate<CR>', { desc = '[D]ebug [Q]uit' })
+      vim.keymap.set('n', '<leader>dR', ':lua require("dapui").open({reset = true})<CR>', { desc = '[D]ebug UI [R]eset' })
+
+    end
+  },
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -283,7 +303,7 @@ require('lazy').setup({
       -- Document existing key chains
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
@@ -373,7 +393,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+      vim.keymap.set('n', '<leader>sD', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
@@ -480,7 +500,7 @@ require('lazy').setup({
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>sd', require('telescope.builtin').lsp_document_symbols, '[S]earch [D]ocument (symbols)')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
