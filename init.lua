@@ -283,6 +283,19 @@ require('lazy').setup({
     end
   },
 
+  {"m4xshen/autoclose.nvim",
+    config = function()
+      -- docs: https://github.com/m4xshen/autoclose.nvim
+      local autoclose = require("autoclose")
+      autoclose.setup({keys = {
+        [")"] = {escape = true, close = true, pair = "()"},
+        ["}"] = {escape = true, close = true, pair = "{}"},
+        ["]"] = {escape = true, close = true, pair = "[]"},
+        [">"] = {escape = true, close = true, pair = "<>"}
+      }})
+    end
+  },
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
