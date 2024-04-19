@@ -291,7 +291,7 @@ require('lazy').setup({
         [")"] = {escape = true, close = true, pair = "()"},
         ["}"] = {escape = true, close = true, pair = "{}"},
         ["]"] = {escape = true, close = true, pair = "[]"},
-        [">"] = {escape = true, close = true, pair = "<>"}
+        -- [">"] = {escape = true, close = true, pair = "<>"}
       }})
     end
   },
@@ -621,6 +621,7 @@ require('lazy').setup({
       require'lspconfig'.clangd.setup{}
       require'lspconfig'.nil_ls.setup{}
       require'lspconfig'.gopls.setup{}
+      require'lspconfig'.pyright.setup{}
     end,
   },
 
@@ -717,7 +718,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<C-e>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -883,6 +884,33 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+})
+
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.l13",
+  command = "set filetype=l1337",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "l1337", -- whatever the filetype is (:set filetype=xxxx)
+  callback = function()
+    local edu_lsp_client = vim.lsp.start_client {
+      name = "educationallsp",
+      cmd = {"/home/jwd/repos/educationallsp/main"},
+      root_dir = vim.fs.dirname(vim.fs.find({
+        'go.mod'
+      }, { upward = true })[1])
+    }
+    vim.lsp.buf_attach_client(0, edu_lsp_client)
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+  end
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
