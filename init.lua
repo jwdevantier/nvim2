@@ -296,6 +296,16 @@ require('lazy').setup({
     end
   },
 
+  {"f-person/git-blame.nvim",
+    config = function()
+      local blame = require("gitblame")
+      blame.setup({
+        -- can be enabled manually with :GitBlameToggle
+        enabled = false,
+      })
+    end
+  },
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
