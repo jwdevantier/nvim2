@@ -306,7 +306,12 @@ require('lazy').setup({
       })
     end
   },
-
+  {
+    "jwdevantier/htt-nvim",
+    config = function()
+      require("htt").setup()
+    end
+  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -780,8 +785,8 @@ require('lazy').setup({
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
 
       -- Default, dark, lovely
-      --vim.cmd.colorscheme 'tokyonight-night'
-      vim.cmd.colorscheme 'catppuccin-latte'
+      vim.cmd.colorscheme 'tokyonight-night'
+      --vim.cmd.colorscheme 'catppuccin-latte'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
