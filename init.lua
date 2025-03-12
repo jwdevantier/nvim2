@@ -307,6 +307,16 @@ require('lazy').setup({
     end
   },
   {
+    "David-Kunz/gen.nvim",
+    -- to see all opts, visit https://github.com/David-Kunz/gen.nvim/blob/main/README.md
+    opts = {
+      -- anything from bigmac's `ollama list`
+      model = "codestral:22b",
+      -- point to bigmac machine
+      host = "10.200.200.10",
+    }
+  },
+  {
     "jwdevantier/htt-nvim",
     config = function()
       require("htt").setup()
@@ -905,25 +915,24 @@ require('lazy').setup({
   },
 })
 
-
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = "*.l13",
-  command = "set filetype=l1337",
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "l1337", -- whatever the filetype is (:set filetype=xxxx)
-  callback = function()
-    local edu_lsp_client = vim.lsp.start_client {
-      name = "educationallsp",
-      cmd = {"/home/jwd/repos/educationallsp/main"},
-      root_dir = vim.fs.dirname(vim.fs.find({
-        'go.mod'
-      }, { upward = true })[1])
-    }
-    vim.lsp.buf_attach_client(0, edu_lsp_client)
-  end,
-})
+-- vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+--   pattern = "*.l13",
+--   command = "set filetype=l1337",
+-- })
+-- 
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "l1337", -- whatever the filetype is (:set filetype=xxxx)
+--   callback = function()
+--     local edu_lsp_client = vim.lsp.start_client {
+--       name = "educationallsp",
+--       cmd = {"/home/jwd/repos/educationallsp/main"},
+--       root_dir = vim.fs.dirname(vim.fs.find({
+--         'go.mod'
+--       }, { upward = true })[1])
+--     }
+--     vim.lsp.buf_attach_client(0, edu_lsp_client)
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "go",
@@ -934,3 +943,5 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+-- in visual mode, call :Gen command (gen.nvim)
+vim.keymap.set('v', '<leader>g', ':Gen<CR>', { noremap = true, silent = true, desc = 'Run the Gen command' })
